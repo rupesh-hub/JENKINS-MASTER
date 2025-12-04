@@ -2,6 +2,11 @@ pipeline{
 
     agent any
 
+    environment {
+        IMAGE_NAME = 'rupesh1997/jenkins-demo-project:1.0.0'
+        PROJECT_NAME = 'jenkins-demo-project'
+    }
+
     stages {
 
         stage("Checkout repository"){
@@ -35,7 +40,7 @@ pipeline{
                  echo "Building docker image"
                  sh '''
                      cd JENKINS-DEMO-PROJECT-01
-                     docker build -f deployment/docker/Dockerfile -t rupesh1997/jenkins-demo-project:1.0.0 .
+                     docker build -f deployment/docker/Dockerfile -t ${IMAGE_NAME} .
                  '''
              }
         }
@@ -44,8 +49,9 @@ pipeline{
              steps {
                  echo "Deployment to the server"
                  sh '''
+                     docker kill ${PROJECT_NAME} && docker rm ${PROJECT_NAME}
                      docker system prune -f
-                     docker run -d -p 9090:9090 --name jenkins-demo-project rupesh1997/jenkins-demo-project:1.0.0
+                     docker run -d -p 9090:9090 --name ${PROJECT_NAME} ${IMAGE_NAME}
                  '''
              }
         }
