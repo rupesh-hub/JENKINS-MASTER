@@ -5,6 +5,7 @@ pipeline{
     environment {
         IMAGE_NAME = 'rupesh1997/jenkins-demo-project:1.0.0'
         PROJECT_NAME = 'jenkins-demo-project'
+        SONAR_HOME = tool "Sonar"
     }
 
     stages {
@@ -32,6 +33,17 @@ pipeline{
                     ./mvnw clean test
                 '''
 
+            }
+        }
+
+        stage("SonarQube Quality Analysis") {
+            steps {
+                withSonarQubeEnv("Sonar") {
+                    sh '''
+                        cd JENKINS-DEMO-PROJECT-01
+                        $SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=JENKINS-DEMO-PROJECT -Dsonar.projectKey=JENKINS-DEMO-PROJECT
+                    '''
+                }
             }
         }
 
