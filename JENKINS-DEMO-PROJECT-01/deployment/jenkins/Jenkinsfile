@@ -11,17 +11,16 @@ pipeline{
 
         }
 
-        stage("Setup java environment"){
-            steps{
-                echo "Setup java environment"
-            }
-        }
-
-        stage("Build project") {
-            steps{
-                echo "Build project"
-            }
-        }
+        stage("Build docker image") {
+             steps{
+                 echo "Building docker image"
+                 sh '''
+                     whoami
+                     cd JENKINS-DEMO-PROJECT-01
+                     docker build -f deployment/docker/Dockerfile -t rupesh1997jenkins-demo-project:1.0.0 .
+                     '''
+                    }
+                }
     }
 
 }
