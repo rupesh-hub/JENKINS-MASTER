@@ -40,10 +40,35 @@ pipeline{
             steps {
                 withSonarQubeEnv("Sonar") {
                     sh '''
+                        echo $SONAR_HOME
                         cd JENKINS-DEMO-PROJECT-01
                         $SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=JENKINS-DEMO-PROJECT -Dsonar.projectKey=JENKINS-DEMO-PROJECT
                     '''
                 }
+            }
+        }
+
+        stage("OWASP Dependency Check") {
+            steps{
+                dependencyCheck additionalArguments: '--scan ./JENKINS-DEMO-PROJECT-01', odcInstallation: 'OWASP'
+                dependencyCheckPublisher pattern: '**/JENKINS-DEMO-PROJECT-01/dependency-check-report.xml'
+            }
+        }
+
+        stage("Sonar Quality Gate Scan") {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: false
+                }
+            }
+        }
+
+        stage("Trivy File System Scan") {
+            steps {
+                sh '''
+                    cd JENKINS-DEMO-PROJECT-01
+                    trivy fs --format table -o trivy-fs-report.html .
+                '''
             }
         }
 
