@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="JENKINS-DEMO-PROJECT-01">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/JENKINS-DEMO-PROJECT-01.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

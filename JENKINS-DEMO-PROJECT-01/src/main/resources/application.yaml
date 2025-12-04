@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: jenkins-demo-project
+
+server:
+  port: 9090
+  servlet:
+    context-path: /api/v1.0.0
