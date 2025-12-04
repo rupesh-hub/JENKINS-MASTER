@@ -1,10 +1,26 @@
-pipeline {
+pipeline{
 
     agent any
 
     stages {
-        stage("Checkout repository") {
-            echo "Checkout from repository."
+
+        stage("Checkout repository"){
+            steps{
+                echo "Checkout repository"
+            }
+
+        }
+
+        stage("Setup java environment"){
+            steps{
+                echo "Setup java environment"
+            }
+        }
+
+        stage("Build project") {
+            steps{
+                echo "Build project"
+            }
         }
     }
 
