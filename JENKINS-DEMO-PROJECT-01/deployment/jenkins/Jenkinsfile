@@ -5,7 +5,6 @@ pipeline{
     environment {
         IMAGE_NAME = 'rupesh1997/jenkins-demo-project:1.0.0'
         PROJECT_NAME = 'jenkins-demo-project'
-        SONAR_HOME = tool "Sonar"
     }
 
     stages {
